@@ -1,0 +1,16 @@
+host: "[::1]"
+port: 50051
+
+grpc:
+    addr: "[::1]:50051"
+pg:
+    max_size: 3
+    min_size: 1
+    idle_timeout: 12000
+    connect_str: postgresql://postgres@localhost:5432/logs?sslmode=Disable
+redis:
+    max_size: 3
+    min_size: 1
+    idle_timeout: 12000
+    connect_str: redis://redis:@localhost:54322/0
+
