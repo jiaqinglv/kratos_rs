@@ -1,4 +1,11 @@
-use crate::{express::server::Servers as ExpressServers, express::server::ServerAddress, libs::core::server::{axum::AxumServer, Server}, config::BootConfig};
+use crate::{
+    kratos::server::Servers as KratosServers, 
+    kratos::server::ServerAddress, 
+    libs::core::server::{
+        axum::AxumServer, 
+        Server
+    }, config::BootConfig
+};
 mod grpc;
 
 // 服务实例
@@ -18,7 +25,7 @@ pub async fn new_servers(conf: BootConfig)-> Result<Servers, Box<dyn std::error:
 }
 
 // 需要实现框架的服务实例列表
-impl ExpressServers for Servers {
+impl KratosServers for Servers {
 }
 
 // 服务实例

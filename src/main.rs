@@ -15,13 +15,13 @@ mod server;
 mod service;
 mod wire;
 
-use libs::core as express;
+use libs::core as kratos;
 use crate::{service::WebServices, wire::wire_app};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     // 配置读取加载
-    let conf = express::load_config::<config::BootConfig>(express::config::ConfigType::YAML(
+    let conf = kratos::load_config::<config::BootConfig>(kratos::config::ConfigType::YAML(
         "./config/default.yaml".to_string(),
     )).await?;
     // 数据源加载
@@ -29,7 +29,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // 创建服务器实例
     let servers = server::new_servers(conf.clone()).await?;
     // 创建应用
-    let app = express::new_app(conf.clone(), datas, servers, "log", "LogService", "v0.0.1");
+    let app = kratos::new_app(conf.clone(), datas, servers, "log", "LogService", "v0.0.1");
 
     // 创建 axum http 服务实例
     let app = app
