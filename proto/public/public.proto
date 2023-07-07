@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package Public;
+
+message Reply {
+    bool status = 1; // 状态
+    int64 code = 2; // 状态码
+    string message = 3; // 消息
+}

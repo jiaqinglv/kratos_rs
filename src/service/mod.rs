@@ -16,6 +16,10 @@ pub struct WebServices {
 }
 
 // 创建 web service集合
-pub fn new_web_services(hello_service: hello::HelloService) -> WebServices {
-    WebServices { hello_service }
+pub fn new_web_services(
+    hello_service: hello::HelloService,
+) -> WebServices {
+    WebServices {
+        hello_service,
+    }
 }

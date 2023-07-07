@@ -12,7 +12,7 @@ pub struct GRPCConfig {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-/// http 服务器配置文件
+/// 服务器配置文件
 pub struct BootConfig {
     // 主机IP
     pub host: String,

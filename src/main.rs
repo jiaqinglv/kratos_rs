@@ -29,7 +29,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // 创建服务器实例
     let servers = server::new_servers(conf.clone()).await?;
     // 创建应用
-    let app = kratos::new_app(conf.clone(), datas, servers, "log", "LogService", "v0.0.1");
+    let app = kratos::new_app(conf.clone(), datas, servers, "code", "CodeService", "0.0.1");
 
     // 创建 axum http 服务实例
     let app = app
@@ -47,7 +47,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .servers
         .expect("servers is None")
         .grpc
-        .expect("http server is None")
+        .expect("grpc server is None")
         .listen(move |grpc:&mut tonic::transport::Server|  -> Result<
             (axum::Router, tonic::transport::server::Routes), 
             Box<dyn std::error::Error + Send + Sync + 'static>

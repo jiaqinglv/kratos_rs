@@ -3,7 +3,7 @@ use std::future::Future;
 use axum::Json;
 
 use super::WebService;
-use crate::{api::v1::hello::response, biz::hello};
+use crate::{api::hello::v1::response, biz::hello};
 
 #[derive(Debug, Default)]
 pub struct HelloService {
