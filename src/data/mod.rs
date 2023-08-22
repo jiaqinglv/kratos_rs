@@ -1,4 +1,4 @@
-use crate::{config, libs::core::data::DataSource};
+use crate::{config, kratos_core_rs::core::data::DataSource};
 
 pub mod hello;
 

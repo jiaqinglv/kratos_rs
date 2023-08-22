@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./kratos_core_rs/Cargo.toml"
+    ]
+}

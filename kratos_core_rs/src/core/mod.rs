@@ -1,7 +1,7 @@
 use std::fmt::Debug;
 
 use self::{app::App, data::DataSource, server::Servers};
-use crate::libs::core::config::{Config, ConfigType, ServerConfig};
+use crate::core::config::{Config, ConfigType, ServerConfig};
 
 pub mod app;
 pub mod config;

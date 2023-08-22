@@ -3,19 +3,18 @@
 use std::{error::Error, sync::Arc};
 use axum::Extension;
 use tracing::info;
-
+use kratos_core_rs;
 mod api;
 mod config;
 mod biz;
 mod data;
-mod libs;
 mod proto;
 mod routers;
 mod server;
 mod service;
 mod wire;
 
-use libs::core as kratos;
+use kratos_core_rs::core as kratos;
 use crate::{service::WebServices, wire::wire_app};
 
 #[tokio::main]

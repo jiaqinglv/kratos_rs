@@ -1,7 +1,7 @@
 use crate::{
     kratos::server::Servers as KratosServers, 
     kratos::server::ServerAddress, 
-    libs::core::server::{
+    kratos_core_rs::core::server::{
         axum::AxumServer, 
         Server
     }, config::BootConfig
