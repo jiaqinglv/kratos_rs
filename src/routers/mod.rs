@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use axum::Router;
 use tower_http::trace::TraceLayer;
-use crate::{api,  service::{WebServices}};
+use crate::{api,  service::WebServices};
 
 pub fn new_http_router() -> Router {
     let router = Router::new();

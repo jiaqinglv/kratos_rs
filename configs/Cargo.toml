@@ -1,0 +1,43 @@
+[package]
+name = "configs"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+kratos_core_rs = {path = "../kratos_core_rs"}
+
+
+tokio = { version = "1.25.0", features = ["full"] }
+serde = { version = "1.0.127", features = ["derive"] }
+serde_json = "1.0.66"
+serde_yaml = "0.9.14"
+# async-trait = "0.1.56"
+
+axum = { version = "0.6.4", features = ["headers"]}
+hyper = "0.14.20"
+
+# 日志
+tracing = "0.1"
+tracing-subscriber = { version="0.3", features = ["env-filter"] }
+
+tower-http = { version = "0.4.0", features = ["fs", "trace"] }
+tower-service = "0.3.2"
+tower-layer = "0.3.2"
+
+
+# grpc 生成
+prost = "0.11"
+prost-types = "0.11"
+
+# GRPC Toic GRPC服务
+tonic = "0.9.2"
+http-body = "0.4.5"
+http = "0.2.9"
+tower = "0.4.13"
+futures = "0.3.28"
+tonic-reflection = "0.9.2"
+sqlx = { version = "0.6", features = [ "runtime-tokio-rustls", "postgres", "macros", "uuid", "chrono"] }
+chrono = {version = "0.4.24", features = ["serde"]}

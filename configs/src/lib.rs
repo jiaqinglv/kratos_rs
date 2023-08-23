@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use self::db::DBPoolConfig;
-use crate::kratos_core_rs::core::config::ServerConfig;
+use kratos_core_rs::core::config::ServerConfig;
 
 pub mod db;
 

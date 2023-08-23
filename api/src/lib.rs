@@ -1,10 +1,21 @@
 use std::sync::Arc;
 
 use axum::Router;
+use serde::{Deserialize, Serialize};
 
-use crate::service::WebServices;
+use service::WebServices;
 
 pub mod hello;
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Response<T> {
+    status: bool,
+    code: i32,
+    #[serde(skip_serializing_if="Option::is_none")]
+    message: Option<String>,
+    data: T
+}
+
 
 // 注册HTTP路由
 pub fn register_http() -> axum::Router {

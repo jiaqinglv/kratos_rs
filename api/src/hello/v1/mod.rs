@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
 use axum::{Router, routing::get};
-use crate::{service::WebServices};
+use service::WebServices;
 
-use super::super::super::proto::hello_world_v1::greeter_server::GreeterServer;
+use protos::hello_world_v1::greeter_server::GreeterServer;
 
 pub mod grpc;
 pub mod http;

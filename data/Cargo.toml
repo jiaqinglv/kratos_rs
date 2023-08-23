@@ -1,0 +1,13 @@
+[package]
+name = "data"
+version = "0.0.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+kratos_core_rs = {path = "../kratos_core_rs"}
+configs = {path = "../configs"}
+
+sqlx = { version = "0.6", features = [ "runtime-tokio-rustls", "postgres", "macros", "uuid", "chrono"] }
+chrono = {version = "0.4.24", features = ["serde"]}

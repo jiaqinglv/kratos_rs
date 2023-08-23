@@ -1,9 +1,8 @@
 use std::future::Future;
 
-use axum::Json;
+use biz::hello;
 
 use super::WebService;
-use crate::{api::hello::v1::response, biz::hello};
 
 #[derive(Debug, Default)]
 pub struct HelloService {
@@ -28,19 +27,15 @@ impl WebService for HelloService {
     }
 }
 
-impl HelloService {
-    // 不对外开放
-    async fn biz_to_res(hello: hello::Hello) -> response::HelloResponse {
-        response::HelloResponse { name: hello.name }
-    }
 
+impl HelloService {
     pub async fn get_service_name(&self) -> &'static str {
         return self.name;
     }
 
     // 创建
-    pub async fn create(&self, name: String) -> Json<response::HelloResponse> {
-        let hello = self.uc.repo.create(hello::Hello { name }).await;
-        return Json(Self::biz_to_res(hello).await);
+    pub async fn create(&self, name: String) -> biz::hello::Hello{
+        let hello_data = self.uc.repo.create(data::hello::Hello { name }).await;
+        return biz::hello::Hello::new(hello_data.name);
     }
 }

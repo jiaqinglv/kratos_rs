@@ -1,10 +1,11 @@
-use crate::{config, kratos_core_rs::core::data::DataSource};
-
-pub mod hello;
+use  configs as config ;
+use  kratos_core_rs::core::data::DataSource;
 
 use sqlx::postgres::PgPoolOptions;
 // use sqlx::mysql::MySqlPoolOptions;
 // etc.
+
+pub mod hello;
 
 #[derive(Debug, Clone)]
 pub struct Data {

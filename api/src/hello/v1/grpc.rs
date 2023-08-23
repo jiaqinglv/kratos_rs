@@ -1,11 +1,11 @@
 use std::sync::Arc;
 
-use crate::service::WebServices;
+use service::WebServices;
 
 use tonic::{Request, Response, Status};
 
-use crate::proto::hello_world_v1::{HelloRequest, HelloReply, self};
-use crate::proto::hello_world_v1::greeter_server::Greeter;
+use protos::hello_world_v1::{HelloRequest, HelloReply, self};
+use protos::hello_world_v1::greeter_server::Greeter;
 
 #[derive(Default)]
 pub struct GreeterService {

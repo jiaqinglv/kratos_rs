@@ -4,3 +4,10 @@ use serde::{Deserialize, Serialize};
 pub struct HelloResponse {
     pub name: String,
 }
+
+
+impl HelloResponse {
+    pub fn from_biz(data: biz::hello::Hello) -> Self {
+        HelloResponse { name: data.name }
+    }
+}

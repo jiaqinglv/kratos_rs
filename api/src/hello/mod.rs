@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use axum::Router;
 
-use crate::service::WebServices;
+use service::WebServices;
 
 pub mod v1;
 

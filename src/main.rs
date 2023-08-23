@@ -4,14 +4,16 @@ use std::{error::Error, sync::Arc};
 use axum::Extension;
 use tracing::info;
 use kratos_core_rs;
-mod api;
-mod config;
-mod biz;
-mod data;
-mod proto;
+use configs as config;
+use data;
+use biz;
+use service;
+use protos as proto;
+use api;
+
+
 mod routers;
 mod server;
-mod service;
 mod wire;
 
 use kratos_core_rs::core as kratos;

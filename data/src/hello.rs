@@ -1,5 +1,9 @@
 use super::Data;
-use crate::biz::hello;
+
+
+pub struct Hello {
+    pub name: String,
+}
 
 #[derive(Debug, Default)]
 pub struct HelloRepo {
@@ -12,10 +16,10 @@ pub fn new_hello_repo(data: Data) -> HelloRepo {
 
 impl HelloRepo {
     #[allow(dead_code)]
-    pub async fn create(&self, hello: hello::Hello) -> hello::Hello {
+    pub async fn create(&self, hello: Hello) -> Hello {
         let name = hello.name + " hello";
 
-        hello::Hello { name }
+        Hello { name }
     }
 
     #[allow(dead_code)]

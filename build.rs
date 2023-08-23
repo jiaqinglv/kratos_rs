@@ -22,8 +22,8 @@ fn main() {
     load_proto("proto/api",&mut out_path);
 
     tonic_build::configure()
-        .out_dir("src/proto")
-        .file_descriptor_set_path("src/proto/proto.pb")
+        .out_dir("protos/src")
+        .file_descriptor_set_path("protos/src/proto.pb")
         .compile(&out_path, &["proto"])
         .unwrap();
 }
