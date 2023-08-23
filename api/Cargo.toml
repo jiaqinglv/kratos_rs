@@ -12,6 +12,7 @@ data = {path = "../data"}
 biz = {path = "../biz"}
 service = {path = "../service"}
 protos = {path = "../protos"}
+constant = {path = "../constant"}
 
 
 tokio = { version = "1.25.0", features = ["full"] }

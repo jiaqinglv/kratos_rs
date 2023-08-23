@@ -13,7 +13,8 @@ pub struct Response<T> {
     code: i32,
     #[serde(skip_serializing_if="Option::is_none")]
     message: Option<String>,
-    data: T
+    #[serde(skip_serializing_if="Option::is_none")]
+    data: Option<T>
 }
 
 

@@ -1,7 +1,7 @@
 use std::future::Future;
 
 use biz::hello;
-
+use constant;
 use super::WebService;
 
 #[derive(Debug, Default)]
@@ -34,8 +34,17 @@ impl HelloService {
     }
 
     // 创建
-    pub async fn create(&self, name: String) -> biz::hello::Hello{
-        let hello_data = self.uc.repo.create(data::hello::Hello { name }).await;
-        return biz::hello::Hello::new(hello_data.name);
+    pub async fn create(&self, name: String) -> Result<biz::hello::Hello, kratos_core_rs::error::Error>{
+        match self.uc.create(biz::hello::Hello{name}).await {
+            Ok(project) => Ok(biz::hello::Hello{name: project.name}),
+            Err(mut err) => {
+                if err.code != 0 {
+                    return  Err(err);
+                } else{
+                    err.code = constant::ErrorCode::BizError as i32;
+                    return Err(err);
+                }
+            },
+        }
     }
 }

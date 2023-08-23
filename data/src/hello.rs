@@ -16,10 +16,10 @@ pub fn new_hello_repo(data: Data) -> HelloRepo {
 
 impl HelloRepo {
     #[allow(dead_code)]
-    pub async fn create(&self, hello: Hello) -> Hello {
+    pub async fn create(&self, hello: Hello) -> Result<Hello, kratos_core_rs::error::Error> {
         let name = hello.name + " hello";
 
-        Hello { name }
+        Ok(Hello { name })
     }
 
     #[allow(dead_code)]

@@ -5,7 +5,7 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [workspace]
-members = ["kratos_core_rs", "configs", "data", "service", "biz", "protos", "api"]
+members = ["constant", "kratos_core_rs", "configs", "data", "service", "biz", "protos", "api"]
 
 
 [build-dependencies]
@@ -14,7 +14,6 @@ prost-build = "0.11.8"
 
 
 [dependencies]
-
 kratos_core_rs = {path = "./kratos_core_rs"}
 configs = {path = "./configs"}
 data = {path = "./data"}

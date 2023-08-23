@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 kratos_core_rs = {path = "../kratos_core_rs"}
 data = {path = "../data"}
+constant = {path = "../constant"}
 
 
 serde = { version = "1.0.127", features = ["derive"] }
