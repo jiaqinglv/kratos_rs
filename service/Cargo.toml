@@ -14,3 +14,9 @@ constant = {path = "../constant"}
 
 axum = { version = "0.6.4", features = ["headers"]}
 
+# 日志
+tracing = "0.1"
+
+serde = { version = "1.0.127", features = ["derive"] }
+serde_json = "1.0.66"
+serde_yaml = "0.9.14"

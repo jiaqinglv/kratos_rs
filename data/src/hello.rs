@@ -1,6 +1,8 @@
 use super::Data;
 
+use serde::{Deserialize, Serialize};
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Hello {
     pub name: String,
 }
@@ -16,6 +18,7 @@ pub fn new_hello_repo(data: Data) -> HelloRepo {
 
 impl HelloRepo {
     #[allow(dead_code)]
+    #[tracing::instrument]
     pub async fn create(&self, hello: Hello) -> Result<Hello, kratos_core_rs::error::Error> {
         let name = hello.name + " hello";
 

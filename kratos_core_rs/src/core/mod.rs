@@ -6,7 +6,7 @@ use crate::core::config::{Config, ConfigType, ServerConfig};
 pub mod app;
 pub mod config;
 pub mod data;
-pub mod log;
+pub mod logs;
 pub mod request;
 pub mod response;
 pub mod server;
@@ -33,18 +33,20 @@ where
 }
 
 /// 创建应用
-pub fn new_app<C, D, S>(
+pub fn new_app<C, D, S, L>(
     conf: C,
     data: D,
     servers: S,
+    logger: L,
     id: &'static str,
     name: &'static str,
     version: &'static str,
-) -> App<C, D, S>
+) -> App<C, D, S, L>
 where
     C: ServerConfig + Sized + Send + Sync,
     D: DataSource + Send + Sync,
     S: Servers,
+    L: logs::Logger + Send + Sync,
 {
     return App {
         id: id.to_string(),
@@ -53,5 +55,6 @@ where
         conf,
         data: Some(data),
         servers: Some(servers),
+        logger: Some(logger)
     };
 }

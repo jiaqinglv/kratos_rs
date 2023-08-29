@@ -34,6 +34,7 @@ impl HelloService {
     }
 
     // 创建
+    #[tracing::instrument]
     pub async fn create(&self, name: String) -> Result<biz::hello::Hello, kratos_core_rs::error::Error>{
         match self.uc.create(biz::hello::Hello{name}).await {
             Ok(project) => Ok(biz::hello::Hello{name: project.name}),

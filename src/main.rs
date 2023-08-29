@@ -2,8 +2,10 @@
 #![feature(impl_trait_in_assoc_type)]
 use std::{error::Error, sync::Arc};
 use axum::Extension;
-use tracing::info;
-use kratos_core_rs;
+use tracing::{self, span,  info};
+use opentelemetry::global;
+
+use kratos_core_rs::{self, core::logs::Logger};
 use configs as config;
 use data;
 use biz;
@@ -17,6 +19,7 @@ mod server;
 mod wire;
 
 use kratos_core_rs::core as kratos;
+use kratos::logs::DefaultLogger;
 use crate::{service::WebServices, wire::wire_app};
 
 #[tokio::main]
@@ -29,20 +32,21 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let datas = data::new_data(&conf).await?;
     // 创建服务器实例
     let servers = server::new_servers(conf.clone()).await?;
+    // 日志
+    let logger = DefaultLogger::new(log::Level::Debug).expect("logger init faild!");
     // 创建应用
-    let app = kratos::new_app(conf.clone(), datas, servers, "code", "CodeService", "0.0.1");
-
-    // 创建 axum http 服务实例
-    let app = app
-        .init_log(tracing::Level::DEBUG)
-        .expect("init log failed");
+    let app = kratos::new_app(conf.clone(), datas, servers, logger, "code", "CodeService", "0.0.1");
 
     // web服务层
     let services: Arc<WebServices> = Arc::new(wire_app(&app.conf, app.data.unwrap()));
     // 路由
     let router = routers::new_http_router().layer(Extension(services.clone()));
-    let conf = app.conf;
-    info!("server is running on http://{}:{}", conf.host, conf.port);
+    let conf = app.conf.clone();
+    
+    span!(tracing::Level::INFO, "config")
+        .in_scope(|| {
+            info!("server is running on http://{}:{}", conf.host, conf.port);
+        });
 
     app
         .servers
@@ -56,7 +60,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
             let gr = routers::new_grpc_router(grpc, services.clone());
             Ok((router.clone(), gr.into_service()))
         })
-        .await?;
+    .await?;
 
+
+    global::shutdown_tracer_provider();
     Result::Ok(())
 }

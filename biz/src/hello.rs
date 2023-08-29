@@ -25,6 +25,7 @@ pub fn new_hello_usecase(repo: data::hello::HelloRepo) -> HelloUsecase {
 }
 
 impl HelloUsecase {
+    #[tracing::instrument]
     pub async fn create(&self, data: Hello) -> Result<Hello,kratos_core_rs::error::Error> {
         match self.repo.create(data::hello::Hello { name: data.name }).await {
             Ok(p) => Ok(Hello{
