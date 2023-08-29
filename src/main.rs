@@ -22,6 +22,11 @@ use kratos_core_rs::core as kratos;
 use kratos::logs::DefaultLogger;
 use crate::{service::WebServices, wire::wire_app};
 
+
+const VERSION: &'static str =  "0.0.1";
+const APP_ID: &'static str = "app";
+const APP_NAME: &'static str = "AppService";
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     // 配置读取加载
@@ -35,14 +40,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // 日志
     let logger = DefaultLogger::new(log::Level::Debug).expect("logger init faild!");
     // 创建应用
-    let app = kratos::new_app(conf.clone(), datas, servers, logger, "code", "CodeService", "0.0.1");
+    let app = kratos::new_app(conf.clone(), datas, servers, logger, APP_ID, APP_NAME, VERSION);
 
     // web服务层
     let services: Arc<WebServices> = Arc::new(wire_app(&app.conf, app.data.unwrap()));
     // 路由
     let router = routers::new_http_router().layer(Extension(services.clone()));
+
+    // 打印配置信息
     let conf = app.conf.clone();
-    
     span!(tracing::Level::INFO, "config")
         .in_scope(|| {
             info!("server is running on http://{}:{}", conf.host, conf.port);
@@ -60,7 +66,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             let gr = routers::new_grpc_router(grpc, services.clone());
             Ok((router.clone(), gr.into_service()))
         })
-    .await?;
+        .await?;
 
 
     global::shutdown_tracer_provider();
