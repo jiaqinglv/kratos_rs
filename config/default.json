@@ -5,7 +5,7 @@
         "max_size": 30,
         "min_size": 10,
         "idle_timeout": 100,
-        "connect_str": "postgresql://postgres:admin@localhost:5432/book?sslmode=Disable"
+        "connect_str": "postgresql://postgres:admin@localhost:5432/task?sslmode=Disable"
     },
     "redis": {
         "max_size": 30,
