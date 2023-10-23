@@ -2,6 +2,7 @@ use std::future::Future;
 
 use biz::hello;
 use constant;
+use tracing::info;
 use super::WebService;
 
 #[derive(Debug, Default)]
@@ -34,8 +35,9 @@ impl HelloService {
     }
 
     // 创建
-    #[tracing::instrument]
+    #[tracing::instrument(name = "service::create")]
     pub async fn create(&self, name: String) -> Result<biz::hello::Hello, kratos_core_rs::error::Error>{
+        info!("get_hello");
         match self.uc.create(biz::hello::Hello{name}).await {
             Ok(project) => Ok(biz::hello::Hello{name: project.name}),
             Err(mut err) => {

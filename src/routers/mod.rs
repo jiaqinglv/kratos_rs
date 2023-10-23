@@ -2,15 +2,16 @@ use std::sync::Arc;
 
 use axum::Router;
 use tower_http::trace::{TraceLayer, self};
-use tracing::Level;
+use tracing::{Level, instrument};
 use crate::{api,  service::WebServices};
 
+#[instrument(name = "new_http_router")]
 pub fn new_http_router() -> Router {
     let router = Router::new();
     // router.route("/favicon.ico", get());
     let api_router = api::register_http();
     let trace_layer = TraceLayer::new_for_http()
-        .make_span_with(trace::DefaultMakeSpan::new().level(Level::INFO))
+        .make_span_with(trace::DefaultMakeSpan::new().include_headers(true).level(Level::INFO))
         .on_request(trace::DefaultOnRequest::new().level(Level::INFO))
         .on_response(trace::DefaultOnResponse::new().level(Level::INFO));
     router.merge(api_router).layer(trace_layer)

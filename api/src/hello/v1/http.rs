@@ -4,6 +4,7 @@ use axum::{extract::Path, response::Json, Extension};
 use constant;
 use hyper::StatusCode;
 use service::WebServices;
+use tracing::info;
 
 use super::response::HelloResponse;
 use crate::Response;
@@ -13,6 +14,7 @@ pub async fn get_hello(
     Path(name): Path<String>,
     Extension(services): Extension<Arc<WebServices>>,
 ) -> (StatusCode, Json<Response<HelloResponse>>) {
+    info!("get_hello");
     match services.hello_service.create(name).await {
         Ok(data) => (
             StatusCode::OK,

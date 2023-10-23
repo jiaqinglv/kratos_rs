@@ -91,10 +91,9 @@ impl GrpcServer {
             let (mut h,mut g) = new_router(&mut grpc).unwrap();
 
             future::ok::<_, Infallible>(tower::service_fn(
+                #[inline] 
                 move |req: hyper::Request<hyper::Body>| match req.version() {
                     Version::HTTP_11 | Version::HTTP_10 => {
-                        println!("http 请求 {:#?}", req);
-
                         Either::Left(
                             // http 1.1、1.0协议走 axum 路由
                             h.call(req)

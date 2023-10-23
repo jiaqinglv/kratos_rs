@@ -60,7 +60,6 @@ impl DefaultLogger {
 
     /// opentelemetry
     pub fn new_tracing_opentelemetry_jaeger(level: log::Level, tracer_name: String) -> Result<Self, Box<dyn Error>>  {
-        global::set_text_map_propagator(TraceContextPropagator::new());
         let tracer = opentelemetry_jaeger::new_agent_pipeline()
             .with_service_name(tracer_name)
             .install_simple()?;
@@ -69,7 +68,10 @@ impl DefaultLogger {
         let telemetry = tracing_opentelemetry::layer().with_tracer(tracer);
         let subscriber = Registry::default().with(telemetry);        
         log::set_max_level(level.to_level_filter());
-        tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
+        // tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
+        global::set_text_map_propagator(TraceContextPropagator::new());
+
+        subscriber.init();
 
         Ok(DefaultLogger{
             level

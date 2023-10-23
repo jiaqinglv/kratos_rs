@@ -2,10 +2,10 @@
 #![feature(impl_trait_in_assoc_type)]
 use std::{error::Error, sync::Arc};
 use axum::Extension;
-use tracing::{self, span,  info};
+use tracing::{self, span,  info, instrument};
 use opentelemetry::global;
 
-use kratos_core_rs::{self, core::logs::Logger};
+use kratos_core_rs;
 use configs as config;
 use data;
 use biz;
@@ -28,6 +28,7 @@ const APP_ID: &'static str = "app";
 const APP_NAME: &'static str = "AppService";
 
 #[tokio::main]
+#[instrument(name = "main")]
 async fn main() -> Result<(), Box<dyn Error>> {
     // 配置读取加载
     let conf = kratos::load_config::<config::BootConfig>(kratos::config::ConfigType::YAML(
@@ -38,7 +39,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // 创建服务器实例
     let servers = server::new_servers(conf.clone()).await?;
     // 日志
-    let logger = DefaultLogger::new(log::Level::Debug).expect("logger init faild!");
+    let logger = DefaultLogger::new_tracing_opentelemetry_jaeger(log::Level::Debug, APP_NAME.to_string()).expect("logger init faild!");
     // 创建应用
     let app = kratos::new_app(conf.clone(), datas, servers, logger, APP_ID, APP_NAME, VERSION);
 

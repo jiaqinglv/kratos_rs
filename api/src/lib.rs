@@ -4,6 +4,7 @@ use axum::Router;
 use serde::{Deserialize, Serialize};
 
 use service::WebServices;
+use tracing::instrument;
 
 pub mod hello;
 
@@ -19,6 +20,7 @@ pub struct Response<T> {
 
 
 // 注册HTTP路由
+#[instrument(name = "register_http")]
 pub fn register_http() -> axum::Router {
     let router = Router::new();
 
