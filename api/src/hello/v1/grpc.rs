@@ -29,7 +29,7 @@ impl Greeter for GreeterService {
         request: Request<HelloRequest>,
     ) -> Result<Response<HelloReply>, Status> {
         println!("接收到请求");
-        println!("Got a request from {:?}", request.remote_addr());
+        println!("Get a request from {:?}", request.remote_addr());
 
         let data = self.web_services.hello_service.create(request.into_inner().name).await.expect("error");
         let reply = hello_world_v1::HelloReply {
